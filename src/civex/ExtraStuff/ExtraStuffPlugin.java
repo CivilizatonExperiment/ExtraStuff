@@ -16,8 +16,8 @@ import civex.ExtraStuff.Commands.BanCommand;
 import civex.ExtraStuff.Commands.TpCommand;
 import civex.ExtraStuff.Commands.FakeBanCommand;
 
-public class ExtraStuffPlugin extends JavaPlugin {
-
+public class ExtraStuffPlugin extends JavaPlugin
+{
     public static ExtraStuffPlugin plugin;
     private ArrayList<UUID> tpList = new ArrayList<UUID>();
     public TeleportListener tpListener;
@@ -25,7 +25,8 @@ public class ExtraStuffPlugin extends JavaPlugin {
     public AfkKick afkKicker;
 
     @Override
-    public void onEnable() {
+    public void onEnable()
+    {
         regTools();
         regListeners();
         regCommands();
@@ -34,62 +35,77 @@ public class ExtraStuffPlugin extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
+    public void onDisable()
+    {
 
     }
 
-    void regTools(){
+    void regTools()
+    {
 
         afkKicker = new AfkKick(this);
 
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 afkKicker.tick();
             }
         }, 0L, 12000L);
 
     }
 
-    void regListeners(){
+    void regListeners()
+    {
         tpListener = new TeleportListener(this);
         ovListener = new OverridesListener();
         getServer().getPluginManager().registerEvents(tpListener, this);
         getServer().getPluginManager().registerEvents(ovListener, this);
     }
 
-    void regCommands(){
+    void regCommands()
+    {
         getServer().getPluginCommand("ban").setExecutor(new BanCommand(this));
         getServer().getPluginCommand("tp").setExecutor(new TpCommand(this));
         //getServer().getPluginCommand("spec").setExecutor(new SpectatorCommand());
         getServer().getPluginCommand("fakeban").setExecutor(new FakeBanCommand(this));
     }
 
-    public boolean canTeleport(Player player){
+    public boolean canTeleport(Player player)
+    {
         UUID uuid = player.getUniqueId();
-        if(tpList.contains(uuid)){
+        if (tpList.contains(uuid))
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
-    public void enableTP(Player player){
+    public void enableTP(Player player)
+    {
         UUID uuid = player.getUniqueId();
-        if(!tpList.contains(uuid)){
+        if (!tpList.contains(uuid))
+        {
             tpList.add(uuid);
         }
     }
 
-    public void disableTP(Player player){
+    public void disableTP(Player player)
+    {
         UUID uuid = player.getUniqueId();
-        if(tpList.contains(uuid)){
+        if (tpList.contains(uuid))
+        {
             tpList.remove(uuid);
         }
     }
 
-    public String getFormatedTime(int hours){
+    public String getFormatedTime(int hours)
+    {
         String output = "";
         int month = 0;
         int week = 0;
@@ -98,44 +114,54 @@ public class ExtraStuffPlugin extends JavaPlugin {
 
         int remain = hours;
 
-        if(remain >= 720){
+        if (remain >= 720)
+        {
             month = remain / 720;
             remain = remain % 720;
         }
 
-        if(remain >= 168){
+        if (remain >= 168)
+        {
             week = remain / 168;
             remain = remain % 168;
         }
 
-        if(remain >= 24){
+        if (remain >= 24)
+        {
             day = remain / 24;
             remain = remain % 24;
         }
 
-        if(month > 0){
+        if (month > 0)
+        {
             output += month + "m";
             notFirst = true;
         }
 
-        if(week > 0){
-            if(notFirst){
+        if (week > 0)
+        {
+            if (notFirst)
+            {
                 output += " ";
             }
             output += week + "w";
             notFirst = true;
         }
 
-        if(day > 0){
-            if(notFirst){
+        if (day > 0)
+        {
+            if (notFirst)
+            {
                 output += " ";
             }
             output += day + "d";
             notFirst = true;
         }
 
-        if(remain > 0){
-            if(notFirst){
+        if (remain > 0)
+        {
+            if (notFirst)
+            {
                 output += " ";
             }
             output += remain + "h";
