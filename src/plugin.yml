@@ -1,0 +1,52 @@
+name: ExtraStuff
+main: civex.ExtraStuff.ExtraStuffPlugin
+version: 1.0
+author: ryan00793
+description: Random stuff.
+commands:
+    ban:
+        description: Ban's players.
+        usage: ban <player> [duration] <reason>
+        aliases: [b]
+        permission: civex.ban.normal
+    fakeban:
+        description: What do you think this does?
+        usage: /fakeban <player> [duration] <reason>
+        permission: civex.ban.fake
+    tp:
+        description: Teleport players.
+        usage: tp <player> <player>
+        permission: civex.tp
+    spec:
+        description: Toggles spectator mode.
+        usage: /spec
+        permission: civex.spec
+    plugin:
+        aliases: [plugins, pl]
+        description: Plugin
+        usage: /plugin
+permissions:
+    civex.ban.normal:
+        default: op
+        description: Allows people to ban people.
+    civex.ban.perm:
+        default: op
+        description: Allows for perma banning people.
+    civex.ban.long:
+        default: op
+        description: Allows longer ban times than normal.
+    civex.ban.fake:
+        default: op
+        description: What do you think this is for?.
+    civex.spec:
+        default: op
+        description: Toggle into spectator mode.
+    civex.tp:
+        default: op
+        description: Allows for teleporting.
+    civex.tp.summon:
+        default: op
+        description: Allows TPing players to players.
+    civex.tp.cords:
+        default: op
+        description: Allows TPing to cords.
