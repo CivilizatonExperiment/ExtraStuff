@@ -2,6 +2,7 @@ package civex.ExtraStuff;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -42,7 +43,6 @@ public class ExtraStuffPlugin extends JavaPlugin
 
     void regTools()
     {
-
         afkKicker = new AfkKick(this);
 
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
@@ -51,10 +51,10 @@ public class ExtraStuffPlugin extends JavaPlugin
             @Override
             public void run()
             {
+                getLogger().log(Level.INFO, "Running Afk Check");
                 afkKicker.tick();
             }
-        }, 0L, 12000L);
-
+        }, 0L, (20L * 60L * 10L/* 10 minutes */));
     }
 
     void regListeners()
