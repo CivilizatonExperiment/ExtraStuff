@@ -1,4 +1,4 @@
-package civex.ExtraStuff.commands;
+package civex.ExtraStuff.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
