@@ -38,15 +38,9 @@ public class AfkKick
                         player.sendMessage(ChatColor.GREEN + "You've just bypassed AFK kick please do not be AFK.");
                     }
                 }
-                else
-                {
-                    newLoc.put(player.getUniqueId(), new Loc(player));
-                }
             }
-            else
-            {
-                newLoc.put(player.getUniqueId(), new Loc(player));
-            }
+
+            newLoc.put(player.getUniqueId(), new Loc(player));
         }
 
         lastLoc.clear();
