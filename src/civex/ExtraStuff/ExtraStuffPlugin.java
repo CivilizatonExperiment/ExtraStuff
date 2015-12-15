@@ -12,7 +12,7 @@ import civex.ExtraStuff.Listeners.OverridesListener;
 import civex.ExtraStuff.Listeners.TeleportListener;
 import civex.ExtraStuff.Utils.AfkKick;
 import civex.ExtraStuff.Commands.BanCommand;
-//import civex.ExtraStuff.Commands.SpectatorCommand;
+import civex.ExtraStuff.Commands.SpectatorCommand;
 import civex.ExtraStuff.Commands.TpCommand;
 import civex.ExtraStuff.Commands.FakeBanCommand;
 
@@ -69,7 +69,7 @@ public class ExtraStuffPlugin extends JavaPlugin
     {
         getServer().getPluginCommand("ban").setExecutor(new BanCommand(this));
         getServer().getPluginCommand("tp").setExecutor(new TpCommand(this));
-        //getServer().getPluginCommand("spec").setExecutor(new SpectatorCommand());
+        getServer().getPluginCommand("spec").setExecutor(new SpectatorCommand());
         getServer().getPluginCommand("fakeban").setExecutor(new FakeBanCommand(this));
     }
 
