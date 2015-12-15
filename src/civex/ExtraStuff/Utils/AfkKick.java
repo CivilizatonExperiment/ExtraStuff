@@ -56,7 +56,7 @@ public class AfkKick
 
     public Boolean shouldKick(Player player)
     {
-        if (new Loc(player).toString().equals(getLastLoc(player.getUniqueId())))
+        if (new Loc(player).toString().equals(getLastLoc(player.getUniqueId()).toString()))
         {
             return true;
         }
