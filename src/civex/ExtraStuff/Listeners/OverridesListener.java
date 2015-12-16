@@ -20,7 +20,6 @@ public class OverridesListener implements Listener
             Player player = event.getPlayer();
             String command[] = event.getMessage().split(" ");
 
-            Bukkit.getLogger().log(Level.INFO, "CommandPreprocess fired");
             if (command[0].equalsIgnoreCase("/plugin"))
             {
                 event.setCancelled(true);
