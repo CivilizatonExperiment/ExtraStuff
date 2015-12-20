@@ -54,7 +54,7 @@ public class ExtraStuffPlugin extends JavaPlugin
                 getLogger().log(Level.INFO, "Running Afk Check");
                 afkKicker.tick();
             }
-        }, 0L, (20L * 60L * 10L/* 10 minutes */));
+        }, 0L, (20L * 60L * 10L /* 10 minutes */));
     }
 
     void regListeners()
@@ -169,5 +169,4 @@ public class ExtraStuffPlugin extends JavaPlugin
 
         return output;
     }
-
 }
