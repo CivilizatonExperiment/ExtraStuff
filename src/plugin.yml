@@ -25,6 +25,10 @@ commands:
         aliases: [plugins, pl]
         description: Plugin
         usage: /plugin
+    modstick:
+        description: Command to enable modstick.
+        usage: /modstick
+        permission: civex.modstick.normal
 permissions:
     civex.ban.normal:
         default: op
@@ -50,3 +54,9 @@ permissions:
     civex.tp.cords:
         default: op
         description: Allows TPing to cords.
+    civex.modstick.normal:
+        default: op
+        description: Allows Players to use a modstick to delete blocks.
+    civex.modstick.admin:
+        default: op
+        description: Allows Player to delete bedrock below level 6 with a modstick.

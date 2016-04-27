@@ -1,9 +1,13 @@
 package civex.ExtraStuff;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import civex.ExtraStuff.Commands.*;
+import civex.ExtraStuff.Listeners.BedPlaceListener;
+import civex.ExtraStuff.Listeners.ModStickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,17 +16,15 @@ import org.bukkit.scheduler.BukkitScheduler;
 import civex.ExtraStuff.Listeners.OverridesListener;
 import civex.ExtraStuff.Listeners.TeleportListener;
 import civex.ExtraStuff.Utils.AfkKick;
-import civex.ExtraStuff.Commands.BanCommand;
-import civex.ExtraStuff.Commands.SpectatorCommand;
-import civex.ExtraStuff.Commands.TpCommand;
-import civex.ExtraStuff.Commands.FakeBanCommand;
 
 public class ExtraStuffPlugin extends JavaPlugin
 {
+    public HashMap<UUID, Boolean> modStickStatus = new HashMap<UUID, Boolean>();
     public static ExtraStuffPlugin plugin;
     private ArrayList<UUID> tpList = new ArrayList<UUID>();
     public TeleportListener tpListener;
     public OverridesListener ovListener;
+    public ModStickListener msListener;
     public AfkKick afkKicker;
 
     @Override
@@ -51,22 +53,36 @@ public class ExtraStuffPlugin extends JavaPlugin
             @Override
             public void run()
             {
-                getLogger().log(Level.INFO, "Running Afk Check");
-                afkKicker.tick();
+                //getLogger().log(Level.INFO, "Running Afk Check");
+                //afkKicker.tick();
             }
         }, 0L, (20L * 60L * 10L /* 10 minutes */));
+
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                getLogger().log(Level.INFO, "AUTO FEED PEARLS");
+                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "ppfeed");
+            }
+        }, 0L, (20L * 60L * 60L * 24L /* 24 hour*/));
     }
 
     void regListeners()
     {
         tpListener = new TeleportListener(this);
         ovListener = new OverridesListener();
+        msListener = new ModStickListener(this);
         getServer().getPluginManager().registerEvents(tpListener, this);
         getServer().getPluginManager().registerEvents(ovListener, this);
+        getServer().getPluginManager().registerEvents(msListener, this);
+        getServer().getPluginManager().registerEvents(new BedPlaceListener(), this);
     }
 
     void regCommands()
     {
+        getServer().getPluginCommand("modstick").setExecutor(new ModStickCommand(this));
         getServer().getPluginCommand("ban").setExecutor(new BanCommand(this));
         getServer().getPluginCommand("tp").setExecutor(new TpCommand(this));
         getServer().getPluginCommand("spec").setExecutor(new SpectatorCommand());
