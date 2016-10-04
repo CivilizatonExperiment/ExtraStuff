@@ -8,6 +8,8 @@ import java.util.logging.Level;
 import civex.ExtraStuff.Commands.*;
 import civex.ExtraStuff.Listeners.BedPlaceListener;
 import civex.ExtraStuff.Listeners.ModStickListener;
+import civex.ExtraStuff.Utils.OutOfBoundsCheck;
+import civex.ExtraStuff.Utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,16 +21,24 @@ import civex.ExtraStuff.Utils.AfkKick;
 
 public class ExtraStuffPlugin extends JavaPlugin
 {
+    //Vars
     public HashMap<UUID, Boolean> modStickStatus = new HashMap<UUID, Boolean>();
-    public static ExtraStuffPlugin plugin;
     private ArrayList<UUID> tpList = new ArrayList<UUID>();
+    public static ExtraStuffPlugin plugin;
+
+    //listeners
     public TeleportListener tpListener;
     public OverridesListener ovListener;
     public ModStickListener msListener;
-    public AfkKick afkKicker;
-    public static Long modStickTimeout = (1L); //3 minutes
-
     public ModStickCommand modStickCommand;
+
+    //tools
+    public AfkKick afkKicker;
+    public OutOfBoundsCheck outOfBoundsCheck;
+    public StringUtils stringUtils = new StringUtils();
+
+    //Values
+    public static Long modStickTimeout = ((1000 * 60) * 3L); //3 minutes in millis
 
     @Override
     public void onEnable()
@@ -49,6 +59,7 @@ public class ExtraStuffPlugin extends JavaPlugin
     void regTools()
     {
         afkKicker = new AfkKick(this);
+        outOfBoundsCheck = new OutOfBoundsCheck();
 
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this, new Runnable()
@@ -60,6 +71,30 @@ public class ExtraStuffPlugin extends JavaPlugin
                 //afkKicker.tick();
             }
         }, 0L, (20L * 60L * 10L /* 10 minutes */));
+
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                for (Player player : Bukkit.getOnlinePlayers())
+                {
+                    boolean outOfBounds = outOfBoundsCheck.isOutOfBounds(player);
+                    if (outOfBounds)
+                    {
+                        if (!player.isOp())
+                        {
+                            //TODO:: Something here
+
+                        }
+                        else
+                        {
+                            //TODO:: Warn or something
+                        }
+                    }
+                }
+            }
+        }, 0L, (20L * 2));//Every 2 seconds
 
         scheduler.scheduleSyncRepeatingTask(this, new Runnable()
         {
@@ -124,69 +159,5 @@ public class ExtraStuffPlugin extends JavaPlugin
         }
     }
 
-    public String getFormatedTime(int hours)
-    {
-        String output = "";
-        int month = 0;
-        int week = 0;
-        int day = 0;
-        boolean notFirst = false;
 
-        int remain = hours;
-
-        if (remain >= 720)
-        {
-            month = remain / 720;
-            remain = remain % 720;
-        }
-
-        if (remain >= 168)
-        {
-            week = remain / 168;
-            remain = remain % 168;
-        }
-
-        if (remain >= 24)
-        {
-            day = remain / 24;
-            remain = remain % 24;
-        }
-
-        if (month > 0)
-        {
-            output += month + "m";
-            notFirst = true;
-        }
-
-        if (week > 0)
-        {
-            if (notFirst)
-            {
-                output += " ";
-            }
-            output += week + "w";
-            notFirst = true;
-        }
-
-        if (day > 0)
-        {
-            if (notFirst)
-            {
-                output += " ";
-            }
-            output += day + "d";
-            notFirst = true;
-        }
-
-        if (remain > 0)
-        {
-            if (notFirst)
-            {
-                output += " ";
-            }
-            output += remain + "h";
-        }
-
-        return output;
-    }
 }
