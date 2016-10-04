@@ -26,6 +26,9 @@ public class ExtraStuffPlugin extends JavaPlugin
     public OverridesListener ovListener;
     public ModStickListener msListener;
     public AfkKick afkKicker;
+    public static Long modStickTimeout = (1L); //3 minutes
+
+    public ModStickCommand modStickCommand;
 
     @Override
     public void onEnable()
@@ -82,7 +85,8 @@ public class ExtraStuffPlugin extends JavaPlugin
 
     void regCommands()
     {
-        getServer().getPluginCommand("modstick").setExecutor(new ModStickCommand(this));
+        modStickCommand = new ModStickCommand(this);
+        getServer().getPluginCommand("modstick").setExecutor(modStickCommand);
         getServer().getPluginCommand("ban").setExecutor(new BanCommand(this));
         getServer().getPluginCommand("tp").setExecutor(new TpCommand(this));
         getServer().getPluginCommand("spec").setExecutor(new SpectatorCommand());
