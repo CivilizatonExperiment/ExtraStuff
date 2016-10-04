@@ -17,14 +17,12 @@ public class SpectatorCommand implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
-
         if (sender instanceof Player)
         {
             Player player = (Player) sender;
 
             if (sender.hasPermission("civex.spec") || sender.isOp())
             {
-
                 if (player.getGameMode() == GameMode.SPECTATOR)
                 {
                     // If the player is in spectator mode, try and switch them
@@ -32,7 +30,6 @@ public class SpectatorCommand implements CommandExecutor
                     if (player.hasMetadata("prevMode"))
                     {
                         player.setGameMode((GameMode) player.getMetadata("prevMode").get(0).value());
-
                     }
                     else
                     {
@@ -43,7 +40,6 @@ public class SpectatorCommand implements CommandExecutor
                     player.teleport(player.getLocation().add(0, 1, 0));
 
                     MessagePlayer(player, "You are now in " + player.getGameMode().toString() + " mode.");
-
                 }
                 else
                 {
@@ -55,30 +51,23 @@ public class SpectatorCommand implements CommandExecutor
                             new FixedMetadataValue(ExtraStuffPlugin.plugin, player.getGameMode()));
                     player.setGameMode(GameMode.SPECTATOR);
                     MessagePlayer(player, "You are now in spectator mode.");
-
                 }
 
                 return true;
-
             }
         }
         else
         {
-
-            // Make sure the sender is a player, afterall, consoles can't
-            // play.
+            // Make sure the sender is a player, afterall, consoles can't play.
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.GREEN + "Only players can toggle spectator mode.");
         }
 
-
         return false;
     }
-
 
     private void MessagePlayer(Player player, String message)
     {
         player.sendMessage(
                 ChatColor.ITALIC + "" + ChatColor.GREEN + message);
     }
-
 }
