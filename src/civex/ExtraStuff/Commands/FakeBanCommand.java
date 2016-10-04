@@ -129,7 +129,7 @@ public class FakeBanCommand implements CommandExecutor
             else
             {
                 Bukkit.getServer().broadcastMessage(ChatColor.WHITE + target + ChatColor.LIGHT_PURPLE + " was temporarily banned by " + ChatColor.WHITE + sender.getName());
-                Bukkit.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "Expire: " + ChatColor.WHITE + dateFormat.format(expire) + " (" + plugin.getFormatedTime(hours) + ")");
+                Bukkit.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "Expire: " + ChatColor.WHITE + dateFormat.format(expire) + " (" + plugin.stringUtils.getFormatedTime(hours) + ")");
                 Bukkit.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "Reason:" + ChatColor.WHITE + reason);
             }
 
