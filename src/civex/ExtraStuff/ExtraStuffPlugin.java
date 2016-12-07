@@ -7,6 +7,7 @@ import java.util.logging.Level;
 
 import civex.ExtraStuff.Commands.*;
 import civex.ExtraStuff.Listeners.BedPlaceListener;
+import civex.ExtraStuff.Listeners.LandBoatListener;
 import civex.ExtraStuff.Listeners.ModStickListener;
 import civex.ExtraStuff.Utils.OutOfBoundsCheck;
 import civex.ExtraStuff.Utils.StringUtils;
@@ -31,6 +32,7 @@ public class ExtraStuffPlugin extends JavaPlugin
     public OverridesListener ovListener;
     public ModStickListener msListener;
     public ModStickCommand modStickCommand;
+    public LandBoatListener lbListener;
 
     //tools
     public AfkKick afkKicker;
@@ -112,9 +114,11 @@ public class ExtraStuffPlugin extends JavaPlugin
         tpListener = new TeleportListener(this);
         ovListener = new OverridesListener();
         msListener = new ModStickListener(this);
+        lbListener = new LandBoatListener(this);
         getServer().getPluginManager().registerEvents(tpListener, this);
         getServer().getPluginManager().registerEvents(ovListener, this);
         getServer().getPluginManager().registerEvents(msListener, this);
+        getServer().getPluginManager().registerEvents(lbListener, this);
         getServer().getPluginManager().registerEvents(new BedPlaceListener(), this);
     }
 
