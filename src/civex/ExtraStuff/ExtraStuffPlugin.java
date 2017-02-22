@@ -6,8 +6,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import civex.ExtraStuff.Commands.*;
-import civex.ExtraStuff.Listeners.BedPlaceListener;
-import civex.ExtraStuff.Listeners.ModStickListener;
+import civex.ExtraStuff.Listeners.*;
 import civex.ExtraStuff.Utils.OutOfBoundsCheck;
 import civex.ExtraStuff.Utils.StringUtils;
 import org.bukkit.Bukkit;
@@ -15,8 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import civex.ExtraStuff.Listeners.OverridesListener;
-import civex.ExtraStuff.Listeners.TeleportListener;
 import civex.ExtraStuff.Utils.AfkKick;
 
 public class ExtraStuffPlugin extends JavaPlugin
@@ -53,7 +50,10 @@ public class ExtraStuffPlugin extends JavaPlugin
     @Override
     public void onDisable()
     {
-
+        for (Player p : Bukkit.getOnlinePlayers())
+        {
+            p.kickPlayer("Server is restarting please check back in a bit");
+        }
     }
 
     void regTools()
@@ -84,8 +84,7 @@ public class ExtraStuffPlugin extends JavaPlugin
                     {
                         if (!player.isOp())
                         {
-                            //TODO:: Something here
-
+                            player.setHealth(0);
                         }
                         else
                         {
@@ -116,6 +115,7 @@ public class ExtraStuffPlugin extends JavaPlugin
         getServer().getPluginManager().registerEvents(ovListener, this);
         getServer().getPluginManager().registerEvents(msListener, this);
         getServer().getPluginManager().registerEvents(new BedPlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new BoarderBuffer(), this);
     }
 
     void regCommands()
@@ -126,6 +126,7 @@ public class ExtraStuffPlugin extends JavaPlugin
         getServer().getPluginCommand("tp").setExecutor(new TpCommand(this));
         getServer().getPluginCommand("spec").setExecutor(new SpectatorCommand());
         getServer().getPluginCommand("fakeban").setExecutor(new FakeBanCommand(this));
+        getServer().getPluginCommand("summon").setExecutor(new SummonCommand(this));
     }
 
     public boolean canTeleport(Player player)

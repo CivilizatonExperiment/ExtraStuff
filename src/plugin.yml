@@ -29,6 +29,11 @@ commands:
         description: Command to enable modstick.
         usage: /modstick
         permission: civex.modstick.normal
+    summon:
+        description: Summons player to you.
+        usage: /summon <player>
+        aliases: [s]
+        permission: civex.tp.summon
 permissions:
     civex.ban.normal:
         default: op
